@@ -1,6 +1,7 @@
 import { Project, ProjectStatus } from "../models/Project";
 import projectState from "../state/projectState";
 import Component from "./Component";
+import ProjectItem from "./ProjectItem";
 
 export default class ProjectList extends Component<HTMLDivElement, HTMLElement>{
 
@@ -16,10 +17,8 @@ export default class ProjectList extends Component<HTMLDivElement, HTMLElement>{
   private renderProjects() {
     const listEl = document.getElementById(`${this.type}-projects-list`)! as HTMLUListElement;
     listEl.innerHTML = '';
-    this.assignedProjects.forEach(p => {
-      const listItem = document.createElement('li');
-      listItem.textContent = p.title;
-      listEl.appendChild(listItem);
+    this.assignedProjects.forEach(project => {
+      new ProjectItem(this.element.querySelector('ul')!.id, project)
     })
   }
 

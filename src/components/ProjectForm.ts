@@ -10,10 +10,10 @@ export default class ProjectForm extends Component<HTMLDivElement, HTMLFormEleme
   constructor() {
     super('project-input', 'app', true,)
 
-
     this.titleInput = this.element.querySelector('#title') as HTMLInputElement;
     this.descriptionInput = this.element.querySelector('#description') as HTMLInputElement;
     this.peopleInput = this.element.querySelector('#people') as HTMLInputElement;
+
     this.configure();
   }
 
