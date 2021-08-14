@@ -1,4 +1,4 @@
-export interface Validatable {
+export interface ValidationInput {
   name: string;
   value: string | number;
   required?: boolean;
@@ -13,7 +13,7 @@ export interface ValidationResult {
   errorMessages: string[]
 }
 
-export function validate(input: Validatable) {
+export function validate(input: ValidationInput) {
   let result: ValidationResult = {
     isValid: true,
     errorMessages: []

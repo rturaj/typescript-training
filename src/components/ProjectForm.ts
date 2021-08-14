@@ -1,32 +1,27 @@
 import Binder from "../decorators/Binder";
-import { Validatable, validate } from "../utils/validation";
-export default class ProjectForm {
-  template: HTMLTemplateElement;
-  appRoot: HTMLDivElement;
-  formElement: HTMLFormElement;
+import projectState from "../state/projectState";
+import { ValidationInput, validate } from "../utils/validation";
+import Component from "./Component";
+export default class ProjectForm extends Component<HTMLDivElement, HTMLFormElement>{
   titleInput: HTMLInputElement
   descriptionInput: HTMLInputElement
   peopleInput: HTMLInputElement
 
   constructor() {
-    this.template = document.getElementById('project-input')! as HTMLTemplateElement;
-    this.appRoot = document.getElementById('app')! as HTMLDivElement;
+    super('project-input', 'app', true,)
 
-    const content = document.importNode(this.template.content, true);
-    this.formElement = content.firstElementChild as HTMLFormElement;
 
-    this.titleInput = this.formElement.querySelector('#title') as HTMLInputElement;
-    this.descriptionInput = this.formElement.querySelector('#description') as HTMLInputElement;
-    this.peopleInput = this.formElement.querySelector('#people') as HTMLInputElement;
+    this.titleInput = this.element.querySelector('#title') as HTMLInputElement;
+    this.descriptionInput = this.element.querySelector('#description') as HTMLInputElement;
+    this.peopleInput = this.element.querySelector('#people') as HTMLInputElement;
     this.configure();
-    this.attach();
   }
 
   private getUserInput(): [string, string, number] | null {
     const title = this.titleInput.value;
     const description = this.descriptionInput.value;
     const people = +this.peopleInput.value;
-    const validators: Validatable[] = [
+    const validators: ValidationInput[] = [
       { name: 'title', value: title, required: true, minLength: 5, maxLength: 20 },
       { name: 'description', value: description, required: true, minLength: 10 },
       { name: 'people', value: people, required: true, min: 1, max: 10 }
@@ -57,17 +52,17 @@ export default class ProjectForm {
     e.preventDefault();
     const input = this.getUserInput();
     if (input) {
-      console.log(input)
+      projectState.addProject(...input);
       this.clearInputs();
     }
 
   }
 
-  private configure() {
-    this.formElement.addEventListener('submit', this.submitHandler);
+  renderContent() { }
+
+  configure() {
+    this.element.addEventListener('submit', this.submitHandler);
   }
 
-  private attach() {
-    this.appRoot.insertAdjacentElement('afterbegin', this.formElement);
-  }
+
 }
