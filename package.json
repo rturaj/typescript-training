@@ -4,7 +4,8 @@
   "description": "Learning project",
   "main": "app.js",
   "scripts": {
-    "dev": "webpack serve",
+    "serve": "webpack serve",
+    "build-dev": "webpack",
     "build": "webpack --config webpack.config.prod.js"
   },
   "keywords": [

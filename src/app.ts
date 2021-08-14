@@ -1,12 +1,4 @@
-interface Test {
-  message: string,
-  status: number
-}
+import ProjectForm from './components/ProjectForm';
 
-const t: Test = { message: 'init', status: 1 };
-
-const el = document.getElementById('test')!;
-
-el.addEventListener('click', () => {
-  console.log('click')
-})
+const projectForm = new ProjectForm();
+console.log(projectForm);
