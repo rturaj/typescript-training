@@ -1,6 +1,8 @@
+import Binder from '../decorators/Binder';
+import Draggable from '../models/Draggable';
 import { Project } from '../models/Project';
 import Component from './Component';
-export default class ProjectItem extends Component<HTMLUListElement, HTMLLIElement>{
+export default class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> implements Draggable {
   private project: Project;
 
   get peopleLabel() {
@@ -13,9 +15,16 @@ export default class ProjectItem extends Component<HTMLUListElement, HTMLLIEleme
     this.configure();
     this.renderContent();
   }
+  @Binder
+  dragStartHandler(event: DragEvent) {
+    event.dataTransfer!.setData('text/plain', this.project.id);
+    event.dataTransfer!.effectAllowed = 'move';
+  }
+
+
 
   configure() {
-
+    this.element.addEventListener('dragstart', this.dragStartHandler);
   }
 
   renderContent() {
